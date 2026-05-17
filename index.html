@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BrandoMise — Full-Stack Marketing</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Barlow+Condensed:wght@600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --black:#0C0C0C; --white:#FFFFFF; --bg:#F6F6F4; --bg2:#EEEEEB;
+      --border:#E0E0DB; --border-d:#CACAC4; --txt:#0C0C0C;
+      --muted:#8A8A84; --muted-l:#B8B8B2;
+      --radius:16px; --r-sm:10px;
+      --sans:'Inter',sans-serif; --cond:'Barlow Condensed',sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body { background:var(--bg); color:var(--txt); font-family:var(--sans); font-size:16px; line-height:1.6; -webkit-font-smoothing:antialiased; }
+    img { display:block; max-width:100%; }
+
+    /* NAV */
+    nav { position:sticky; top:0; z-index:100; background:rgba(246,246,244,.93); backdrop-filter:blur(18px); border-bottom:1px solid var(--border); height:58px; padding:0 48px; display:flex; align-items:center; justify-content:space-between; }
+    .nav-logo { display:flex; align-items:center; gap:11px; text-decoration:none; }
+    .nav-b { width:32px; height:32px; background:var(--black); border-radius:7px; display:flex; align-items:center; justify-content:center; overflow:hidden; flex-shrink:0; }
+    .nav-b img { width:100%; height:100%; object-fit:cover; }
+    .nav-b-letter { font-family:var(--cond); font-weight:900; font-size:19px; color:var(--white); line-height:1; }
+    .nav-word { font-family:var(--cond); font-weight:800; font-size:17px; letter-spacing:.3px; color:var(--black); }
+    .nav-r { display:flex; align-items:center; gap:24px; }
+    .nav-link { font-size:13px; font-weight:500; color:var(--muted); text-decoration:none; transition:color .15s; }
+    .nav-link:hover { color:var(--black); }
+    .btn-black { background:var(--black); color:var(--white); font-size:13px; font-weight:600; padding:8px 20px; border-radius:7px; text-decoration:none; transition:opacity .15s; }
+    .btn-black:hover { opacity:.78; }
+
+    /* HERO */
+    .hero { background:var(--black); color:var(--white); padding:96px 48px 88px; position:relative; overflow:hidden; }
+    .hero::after { content:'B'; position:absolute; right:-30px; top:50%; transform:translateY(-50%); font-family:var(--cond); font-weight:900; font-size:500px; line-height:1; color:rgba(255,255,255,.025); pointer-events:none; user-select:none; }
+    .hero-inner { max-width:1140px; margin:0 auto; display:grid; grid-template-columns:1.1fr .9fr; gap:72px; align-items:end; }
+    .hero-pill { display:inline-flex; align-items:center; gap:8px; background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.12); border-radius:100px; padding:5px 14px; font-size:11px; color:rgba(255,255,255,.5); letter-spacing:1.4px; text-transform:uppercase; margin-bottom:26px; width:fit-content; }
+    .hero-pill i { width:5px; height:5px; background:#fff; border-radius:50%; opacity:.5; flex-shrink:0; }
+    .hero h1 { font-family:var(--cond); font-weight:900; font-size:clamp(58px,6.8vw,94px); line-height:.92; letter-spacing:-2px; text-transform:uppercase; margin-bottom:22px; }
+    .hero-sub { font-size:16px; color:rgba(255,255,255,.5); line-height:1.75; max-width:400px; margin-bottom:34px; }
+    .hero-btns { display:flex; gap:11px; }
+    .btn-w { background:var(--white); color:var(--black); font-size:14px; font-weight:700; padding:13px 26px; border-radius:var(--r-sm); text-decoration:none; transition:opacity .15s; }
+    .btn-w:hover { opacity:.87; }
+    .btn-gw { background:transparent; color:rgba(255,255,255,.5); font-size:14px; font-weight:500; padding:13px 26px; border-radius:var(--r-sm); border:1px solid rgba(255,255,255,.16); text-decoration:none; transition:all .15s; }
+    .btn-gw:hover { color:#fff; border-color:rgba(255,255,255,.4); }
+    .hero-stats { display:grid; grid-template-columns:1fr 1fr; gap:1px; background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.07); border-radius:var(--radius); overflow:hidden; }
+    .hs { background:rgba(255,255,255,.04); padding:26px 22px; }
+    .hs-n { font-family:var(--cond); font-weight:900; font-size:40px; line-height:1; letter-spacing:-1px; color:#fff; display:block; margin-bottom:5px; }
+    .hs-l { font-size:11px; color:rgba(255,255,255,.38); letter-spacing:.2px; }
+
+    /* LOGOS */
+    .logos-wrap { background:var(--white); border-bottom:1px solid var(--border); padding:32px 0; overflow:hidden; }
+    .logos-label { text-align:center; font-size:10px; font-weight:700; letter-spacing:2.5px; text-transform:uppercase; color:var(--muted-l); margin-bottom:24px; }
+    .logos-fade { overflow:hidden; mask-image:linear-gradient(to right,transparent,black 8%,black 92%,transparent); -webkit-mask-image:linear-gradient(to right,transparent,black 8%,black 92%,transparent); }
+    .logos-track { display:flex; animation:ticker 32s linear infinite; width:max-content; }
+    .logos-track:hover { animation-play-state:paused; }
+    @keyframes ticker { to { transform:translateX(-50%); } }
+    .logo-cell { padding:0 36px; display:flex; align-items:center; height:44px; border-right:1px solid var(--border); flex-shrink:0; }
+    .logo-cell img { height:32px; width:auto; max-width:120px; object-fit:contain; filter:grayscale(1) opacity(.6); mix-blend-mode:multiply; transition:all .2s; }
+    .logo-cell:hover img { filter:grayscale(0) opacity(1); }
+    .logo-txt { font-family:var(--cond); font-weight:800; font-size:15px; color:var(--muted); letter-spacing:.4px; white-space:nowrap; transition:color .2s; }
+    .logo-cell:hover .logo-txt { color:var(--black); }
+
+    /* SECTIONS */
+    .sec { padding:96px 48px; }
+    .sec-inner { max-width:1140px; margin:0 auto; }
+    .sec-alt { background:var(--white); }
+    .sec-dark { background:var(--black); color:var(--white); }
+    .eyebrow { font-size:10px; font-weight:700; letter-spacing:2.5px; text-transform:uppercase; color:var(--muted); margin-bottom:16px; }
+    .eyebrow-w { color:rgba(255,255,255,.4); }
+    h2 { font-family:var(--cond); font-weight:900; font-size:clamp(38px,4.2vw,58px); line-height:.95; letter-spacing:-1px; text-transform:uppercase; }
+    h2.light { color:var(--white); }
+    h3 { font-family:var(--cond); font-weight:800; font-size:22px; letter-spacing:.1px; }
+
+    /* WHY */
+    .why-top { display:flex; align-items:flex-end; justify-content:space-between; gap:40px; margin-bottom:52px; flex-wrap:wrap; }
+    .why-sub { font-size:17px; color:var(--muted); line-height:1.75; max-width:340px; }
+    .why-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--border); border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; }
+    .why-card { background:var(--white); padding:36px 30px; position:relative; }
+    .why-n { font-family:var(--cond); font-weight:900; font-size:60px; line-height:1; letter-spacing:-2px; color:var(--black); margin-bottom:10px; display:block; }
+    .why-card h3 { font-size:15px; font-weight:700; font-family:var(--sans); margin-bottom:8px; }
+    .why-card p { font-size:13px; color:var(--muted); line-height:1.65; }
+    .why-idx { position:absolute; top:16px; right:20px; font-size:10px; color:var(--border-d); font-weight:700; letter-spacing:1px; }
+
+    /* PROOF */
+    .proof-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:44px; }
+    .proof-card { border-radius:var(--radius); overflow:hidden; border:1px solid var(--border); background:var(--white); display:flex; flex-direction:column; }
+    .proof-card.tall { grid-row:span 2; }
+    .proof-img { overflow:hidden; flex:1; min-height:200px; }
+    .proof-img img { width:100%; height:100%; object-fit:cover; object-position:top; display:block; }
+    .proof-cap { padding:14px 18px; border-top:1px solid var(--border); }
+    .proof-tag { font-size:10px; font-weight:700; letter-spacing:1.4px; text-transform:uppercase; color:var(--muted); display:block; margin-bottom:3px; }
+    .proof-cap p { font-size:12px; color:var(--muted); line-height:1.5; }
+    .proof-right { display:flex; flex-direction:column; gap:16px; }
+
+    /* PROCESS */
+    .process-row { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-top:52px; }
+    .p-step { background:var(--white); border:1px solid var(--border); border-radius:var(--radius); padding:36px 30px; position:relative; overflow:hidden; }
+    .p-step::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:var(--black); }
+    .step-n { font-family:var(--cond); font-weight:900; font-size:80px; line-height:1; letter-spacing:-3px; color:var(--border); margin-bottom:18px; display:block; }
+    .p-step h3 { font-size:19px; font-weight:700; font-family:var(--sans); margin-bottom:10px; }
+    .p-step p { font-size:14px; color:var(--muted); line-height:1.7; margin-bottom:18px; }
+    .step-list { list-style:none; }
+    .step-list li { font-size:13px; color:var(--muted); padding:8px 0; border-bottom:1px solid var(--border); display:flex; align-items:center; gap:10px; }
+    .step-list li:last-child { border-bottom:none; }
+    .step-list li::before { content:'→'; color:var(--black); font-size:12px; flex-shrink:0; }
+
+    /* CASES */
+    .cases-head { display:flex; align-items:flex-end; justify-content:space-between; margin-bottom:48px; gap:24px; flex-wrap:wrap; }
+    .cases-note { font-size:13px; color:var(--muted); max-width:280px; text-align:right; }
+    .cases-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+    .c-card { background:var(--white); border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; display:flex; flex-direction:column; transition:box-shadow .2s, border-color .2s; }
+    .c-card:hover { border-color:var(--border-d); box-shadow:0 4px 24px rgba(0,0,0,.07); }
+    .c-img-wrap { height:160px; overflow:hidden; background:#f0f0ed; display:flex; align-items:center; justify-content:center; }
+    .c-img-wrap img { width:100%; height:100%; object-fit:cover; object-position:top; }
+    .c-img-wrap.contain img { object-fit:contain; padding:20px 32px; }
+    .c-img-wrap.dark-bg { background:#0c1a2e; }
+    .c-body { padding:22px 22px 26px; flex:1; }
+    .c-tags { display:flex; gap:6px; margin-bottom:12px; flex-wrap:wrap; }
+    .tag { display:inline-block; font-size:10px; font-weight:700; letter-spacing:1.3px; text-transform:uppercase; padding:4px 9px; border-radius:5px; }
+    .tag-g { background:#EFF6FF; color:#2563EB; }
+    .tag-m { background:#FFF0F0; color:#C0392B; }
+    .tag-s { background:#F0FFF4; color:#166534; }
+    .tag-n { background:var(--bg2); color:var(--muted); }
+    .c-industry { font-size:11px; color:var(--muted-l); text-transform:uppercase; letter-spacing:1px; margin-bottom:4px; }
+    .c-name { font-family:var(--cond); font-weight:800; font-size:22px; letter-spacing:.1px; margin-bottom:16px; }
+    .c-metrics { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:14px; }
+    .c-m-n { font-family:var(--cond); font-weight:900; font-size:28px; line-height:1; letter-spacing:-.5px; color:var(--black); display:block; }
+    .c-m-l { font-size:11px; color:var(--muted); margin-top:2px; }
+    .c-div { border:none; border-top:1px solid var(--border); margin:12px 0; }
+    .c-note { font-size:13px; color:var(--muted); line-height:1.6; }
+
+    /* SERVICES */
+    .srv-layout { display:grid; grid-template-columns:1fr 1.6fr; gap:72px; align-items:start; margin-top:52px; }
+    .srv-left p { font-size:15px; color:var(--muted); line-height:1.8; margin-bottom:16px; }
+    .srv-img { border-radius:var(--radius); overflow:hidden; border:1px solid var(--border); margin-top:24px; }
+    .srv-img img { width:100%; display:block; }
+    .srv-grid { display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--border); border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; }
+    .srv-item { background:var(--white); padding:22px; }
+    .srv-ico { font-size:20px; margin-bottom:10px; }
+    .srv-item h4 { font-size:14px; font-weight:700; margin-bottom:5px; }
+    .srv-item p { font-size:12px; color:var(--muted); line-height:1.55; }
+
+    /* REPORTING */
+    .rep-layout { display:grid; grid-template-columns:1fr 1fr; gap:48px; margin-top:52px; align-items:start; }
+    .rep-left { display:flex; flex-direction:column; gap:16px; }
+    .rep-photo { border-radius:var(--radius); overflow:hidden; border:1px solid var(--border); }
+    .rep-photo img { width:100%; display:block; }
+    .rep-sender { display:flex; align-items:center; gap:16px; background:var(--white); border:1px solid var(--border); border-radius:var(--radius); padding:16px 20px; }
+    .rep-sender-photo { width:52px; height:52px; border-radius:50%; overflow:hidden; flex-shrink:0; background:var(--bg2); border:2px solid var(--border); }
+    .rep-sender-photo img { width:100%; height:100%; object-fit:cover; object-position:top; filter:grayscale(1); }
+    .rep-sender-info strong { font-size:14px; font-weight:700; color:var(--black); display:block; }
+    .rep-sender-info span { font-size:12px; color:var(--muted); }
+    .rep-cards { display:flex; flex-direction:column; gap:16px; }
+    .rep-card { background:var(--bg); border:1px solid var(--border); border-radius:var(--radius); padding:28px 26px; }
+    .rep-card h3 { font-size:16px; font-weight:700; margin-bottom:6px; }
+    .rep-loom-tag { display:inline-block; font-size:10px; font-weight:700; letter-spacing:1.2px; text-transform:uppercase; background:#FFF4E5; color:#B45309; border-radius:4px; padding:3px 8px; margin-bottom:10px; }
+    .rep-card p { font-size:13px; color:var(--muted); line-height:1.65; margin-bottom:14px; }
+    .rep-list { list-style:none; }
+    .rep-list li { font-size:13px; color:var(--txt); padding:8px 0; border-bottom:1px solid var(--border); display:flex; align-items:center; gap:10px; }
+    .rep-list li:last-child { border-bottom:none; }
+    .rep-dot { width:5px; height:5px; background:var(--black); border-radius:50%; flex-shrink:0; }
+
+    /* ABOUT */
+    .about-layout { display:grid; grid-template-columns:1fr 1fr; gap:72px; align-items:center; }
+    .about-left p { font-size:15px; color:var(--muted); line-height:1.85; margin-bottom:14px; }
+    .about-left h2 { margin-bottom:20px; }
+    .badges { display:flex; flex-wrap:wrap; gap:8px; margin-top:22px; }
+    .badge { background:var(--white); border:1px solid var(--border); border-radius:6px; font-size:12px; color:var(--muted); padding:6px 13px; }
+    .about-stats { display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--border); border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; }
+    .a-stat { background:var(--white); padding:28px 24px; }
+    .a-n { font-family:var(--cond); font-weight:900; font-size:44px; line-height:1; letter-spacing:-1.5px; color:var(--black); display:block; margin-bottom:5px; }
+    .a-l { font-size:12px; color:var(--muted); line-height:1.5; }
+
+    /* CTA */
+    .cta-inner { max-width:720px; margin:0 auto; text-align:center; }
+    .cta-inner h2 { font-size:clamp(44px,5.5vw,72px); margin-bottom:18px; }
+    .cta-inner p { font-size:17px; color:rgba(255,255,255,.5); line-height:1.7; margin-bottom:36px; }
+    .cta-btns { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-bottom:20px; }
+    .btn-wl { background:var(--white); color:var(--black); font-size:14px; font-weight:700; padding:15px 32px; border-radius:var(--r-sm); text-decoration:none; transition:opacity .15s; }
+    .btn-wl:hover { opacity:.87; }
+    .btn-ol { background:transparent; color:rgba(255,255,255,.5); font-size:14px; padding:15px 32px; border:1px solid rgba(255,255,255,.18); border-radius:var(--r-sm); text-decoration:none; transition:all .15s; }
+    .btn-ol:hover { border-color:rgba(255,255,255,.4); color:#fff; }
+    .cta-fine { font-size:12px; color:rgba(255,255,255,.3); }
+
+    /* FOOTER */
+    footer { background:var(--black); border-top:1px solid #1e1e1e; padding:28px 48px; display:flex; align-items:center; justify-content:space-between; }
+    .foot-logo { display:flex; align-items:center; gap:10px; }
+    .foot-b { width:26px; height:26px; background:var(--white); border-radius:5px; display:flex; align-items:center; justify-content:center; font-family:var(--cond); font-weight:900; font-size:15px; color:var(--black); }
+    footer span { font-size:12px; color:#444; }
+
+    /* FADE */
+    .fade { opacity:0; transform:translateY(16px); transition:opacity .5s ease, transform .5s ease; }
+    .fade.in { opacity:1; transform:translateY(0); }
+
+    /* RESPONSIVE */
+    @media (max-width:960px) {
+      nav { padding:0 20px; }
+      .sec { padding:64px 20px; }
+      .hero { padding:72px 20px 64px; }
+      .hero-inner,.why-grid,.process-row,.cases-grid,.srv-layout,.rep-layout,.about-layout { grid-template-columns:1fr; }
+      .hero-stats,.about-stats { grid-template-columns:1fr 1fr; }
+      .proof-grid { grid-template-columns:1fr; }
+      footer { flex-direction:column; gap:10px; text-align:center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">
+    <span class="nav-word">Brandomise</span>
+  </a>
+  <div class="nav-r">
+    <a href="#results" class="nav-link">Results</a>
+    <a href="#cases" class="nav-link">Case Studies</a>
+    <a href="#services" class="nav-link">Services</a>
+    <a href="#cta" class="btn-black">Book a Call</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-pill"><i></i>Full-Stack Digital Marketing · 2026</div>
+      <h1>We Get Brands<br>More Leads.<br>More Revenue.</h1>
+      <p class="hero-sub">From paid ads and creative to complete marketing management — we build systems that grow your brand and fill your pipeline.</p>
+      <div class="hero-btns">
+        <a href="#cta" class="btn-w">Book a Free Call</a>
+        <a href="#results" class="btn-gw">See Our Results →</a>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="hs">
+        <span class="hs-n counting" data-target="20" data-suffix="+">0+</span>
+        <span class="hs-l">Brands Scaled</span>
+      </div>
+      <div class="hs">
+        <span class="hs-n">€1.4M+</span>
+        <span class="hs-l">Revenue Generated</span>
+      </div>
+      <div class="hs">
+        <span class="hs-n counting" data-target="12" data-suffix=" yrs">0</span>
+        <span class="hs-l">Years of Team Experience</span>
+      </div>
+      <div class="hs">
+        <span class="hs-n">Hundreds</span>
+        <span class="hs-l">of Leads Delivered</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LOGOS -->
+<div class="logos-wrap">
+  <div class="logos-label">Brands we've worked with</div>
+  <div class="logos-fade">
+    <div class="logos-track">
+      <div class="logo-cell"><img src="../dolphin-wave-site/public/clients/panska-elegancia.png" alt="Pánska Elegancia"></div>
+      <div class="logo-cell"><img src="elegantni-myti-logo.png" alt="Elegantní Mytí" onerror="this.src='../dolphin-wave-site/public/clients/elegantni-myti.png'"></div>
+      <div class="logo-cell"><img src="fullgas-logo.png" alt="Fullgas.shop" onerror="this.src='../dolphin-wave-site/public/clients/fullgas.png'"></div>
+      <div class="logo-cell"><img src="bubbe-logo.png" alt="Bubbe" onerror="this.outerHTML='<span class=\'logo-txt\'>Bubbe</span>'"></div>
+      <div class="logo-cell"><img src="../dolphin-wave-site/public/clients/feel-the-silk.png" alt="Feel the Silk"></div>
+      <div class="logo-cell"><img src="../dolphin-wave-site/public/clients/joda-organika.png" alt="Joda Organika"></div>
+      <div class="logo-cell"><img src="proste-jinak-logo.png" alt="Proste Jinak" onerror="this.outerHTML='<span class=\'logo-txt\'>Proste Jinak</span>'"></div>
+      <div class="logo-cell"><img src="../dolphin-wave-site/public/clients/habala.png" alt="Habala"></div>
+      <div class="logo-cell"><img src="../dolphin-wave-site/public/clients/barfi.png" alt="Barfi.sk"></div>
+      <div class="logo-cell"><img src="../dolphin-wave-site/public/clients/prosalon.png" alt="Prosalon"></div>
+      <div class="logo-cell"><img src="../dolphin-wave-site/public/clients/dendy.png" alt="Dendy"></div>
+      <!-- duplicate for seamless loop -->
+      <div class="logo-cell"><img src="../dolphin-wave-site/public/clients/panska-elegancia.png" alt="Pánska Elegancia"></div>
+      <div class="logo-cell"><img src="elegantni-myti-logo.png" alt="Elegantní Mytí" onerror="this.src='../dolphin-wave-site/public/clients/elegantni-myti.png'"></div>
+      <div class="logo-cell"><img src="fullgas-logo.png" alt="Fullgas.shop" onerror="this.src='../dolphin-wave-site/public/clients/fullgas.png'"></div>
+      <div class="logo-cell"><img src="bubbe-logo.png" alt="Bubbe" onerror="this.outerHTML='<span class=\'logo-txt\'>Bubbe</span>'"></div>
+      <div class="logo-cell"><img src="../dolphin-wave-site/public/clients/feel-the-silk.png" alt="Feel the Silk"></div>
+      <div class="logo-cell"><img src="../dolphin-wave-site/public/clients/joda-organika.png" alt="Joda Organika"></div>
+      <div class="logo-cell"><img src="proste-jinak-logo.png" alt="Proste Jinak" onerror="this.outerHTML='<span class=\'logo-txt\'>Proste Jinak</span>'"></div>
+      <div class="logo-cell"><img src="../dolphin-wave-site/public/clients/habala.png" alt="Habala"></div>
+      <div class="logo-cell"><img src="../dolphin-wave-site/public/clients/barfi.png" alt="Barfi.sk"></div>
+      <div class="logo-cell"><img src="../dolphin-wave-site/public/clients/prosalon.png" alt="Prosalon"></div>
+      <div class="logo-cell"><img src="../dolphin-wave-site/public/clients/dendy.png" alt="Dendy"></div>
+    </div>
+  </div>
+</div>
+
+<!-- WHY DIGITAL -->
+<section class="sec" id="why">
+  <div class="sec-inner">
+    <div class="why-top">
+      <div>
+        <div class="eyebrow">The Opportunity</div>
+        <h2>Why Digital<br>Is Non-Negotiable</h2>
+      </div>
+      <p class="why-sub">The brands growing fastest aren't the ones with the best product — they're the ones with the best marketing system.</p>
+    </div>
+    <div class="why-grid">
+      <div class="why-card fade"><span class="why-idx">01</span><span class="why-n">$700B+</span><h3>Global digital ad spend in 2025</h3><p>Your competitors are already there. Every month you're not is market share lost.</p></div>
+      <div class="why-card fade"><span class="why-idx">02</span><span class="why-n">63%</span><h3>Of purchases start online</h3><p>Even offline buyers research online first. No presence means no consideration.</p></div>
+      <div class="why-card fade"><span class="why-idx">03</span><span class="why-n">5–10×</span><h3>ROAS on optimised campaigns</h3><p>Well-run paid media consistently returns 5–10×. The gap between average and great is strategy.</p></div>
+      <div class="why-card fade"><span class="why-idx">04</span><span class="why-n">3.5×</span><h3>More leads with a real strategy</h3><p>Structured digital marketing generates 3.5× more leads than ad-hoc campaigns.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROOF / RESULTS -->
+<section class="sec sec-alt" id="results">
+  <div class="sec-inner">
+    <div class="eyebrow">Proof of Performance</div>
+    <h2>Real Accounts.<br>Real Numbers.</h2>
+    <div class="proof-grid">
+      <div class="proof-card tall fade">
+        <div class="proof-img" style="min-height:340px;">
+          <img src="results-collage.png" alt="Results collage">
+        </div>
+        <div class="proof-cap">
+          <span class="proof-tag">Client Results</span>
+          <p>ROAS numbers, revenue screenshots, real performance data across multiple accounts.</p>
+        </div>
+      </div>
+      <div class="proof-right">
+        <div class="proof-card fade">
+          <div class="proof-img" style="min-height:160px;">
+            <img src="google-ads.png" alt="Google Ads results">
+          </div>
+          <div class="proof-cap">
+            <span class="proof-tag">Google Ads · Fullgas.shop</span>
+            <p>€3.01K spend → €21.3K revenue · 707% ROAS · 377 conversions</p>
+          </div>
+        </div>
+        <div class="proof-card fade">
+          <div class="proof-img" style="min-height:160px;">
+            <img src="meta-ads-dec.png" alt="Meta Ads December 2025">
+          </div>
+          <div class="proof-cap">
+            <span class="proof-tag">Meta Ads · December 2025</span>
+            <p>€7,020 spend → €39,223 revenue · 1,144 purchases · 5.59× avg ROAS</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="proof-grid" style="margin-top:16px;">
+      <div class="proof-card fade">
+        <div class="proof-img" style="min-height:180px;">
+          <img src="meta-ads-q3.png" alt="Meta Ads Q3 2025">
+        </div>
+        <div class="proof-cap">
+          <span class="proof-tag">Meta Ads · Sep–Nov 2025</span>
+          <p>€1,459 spend → €18,579 revenue · 12.73× ROAS</p>
+        </div>
+      </div>
+      <div class="proof-card fade">
+        <div class="proof-img" style="min-height:180px; background:#f5f5f3;">
+          <img src="power-of-algo.png" alt="Power of algorithm" style="width:100%;height:auto;object-fit:contain;object-position:center;">
+        </div>
+        <div class="proof-cap">
+          <span class="proof-tag">Power of Algorithm</span>
+          <p>Invest 9€, get back 8,369€ in orders — actual client outcome.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="sec" id="process">
+  <div class="sec-inner">
+    <div class="eyebrow">How We Work</div>
+    <h2>Three Steps.<br>Real Results.</h2>
+    <div class="process-row">
+      <div class="p-step fade">
+        <span class="step-n">01</span>
+        <h3>Understand</h3>
+        <p>We dig into your brand, market, current performance, and goals. No templates — every strategy starts from scratch.</p>
+        <ul class="step-list">
+          <li>Business & audience audit</li>
+          <li>Competitor analysis</li>
+          <li>Funnel mapping</li>
+          <li>Revenue goal alignment</li>
+        </ul>
+      </div>
+      <div class="p-step fade">
+        <span class="step-n">02</span>
+        <h3>Strategy</h3>
+        <p>We build the full system: channel selection, creative direction, targeting, and budget — before spending a single euro.</p>
+        <ul class="step-list">
+          <li>Channel strategy (Meta / Google)</li>
+          <li>Creative brief & ad concepts</li>
+          <li>Audience build & targeting</li>
+          <li>Budget & pacing plan</li>
+        </ul>
+      </div>
+      <div class="p-step fade">
+        <span class="step-n">03</span>
+        <h3>Scale</h3>
+        <p>We launch, test, and optimize weekly. Winners scale. Losers get cut fast. You see everything in a Loom every week.</p>
+        <ul class="step-list">
+          <li>Launch & A/B testing</li>
+          <li>Weekly optimization cycles</li>
+          <li>Scaling winning campaigns</li>
+          <li>Loom report every Friday</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CASE STUDIES -->
+<section class="sec sec-alt" id="cases">
+  <div class="sec-inner">
+    <div class="cases-head">
+      <div>
+        <div class="eyebrow">Case Studies</div>
+        <h2>Results We've<br>Delivered</h2>
+      </div>
+      <p class="cases-note">Some clients are under NDA — numbers are real, names are protected.</p>
+    </div>
+    <div class="cases-grid">
+
+      <div class="c-card fade">
+        <div class="c-img-wrap contain" style="background:#faf8f5;"><img src="../dolphin-wave-site/public/clients/panska-elegancia.png" alt="Pánska Elegancia"></div>
+        <div class="c-body">
+          <div class="c-tags"><span class="tag tag-m">Meta Ads</span></div>
+          <div class="c-industry">Men's Fashion</div>
+          <div class="c-name">Pánska Elegancia</div>
+          <div class="c-metrics">
+            <div><span class="c-m-n">5.59×</span><div class="c-m-l">ROAS</div></div>
+            <div><span class="c-m-n">€39K</span><div class="c-m-l">Revenue</div></div>
+            <div><span class="c-m-n">1,144</span><div class="c-m-l">Purchases</div></div>
+            <div><span class="c-m-n">1 mo.</span><div class="c-m-l">Timeframe</div></div>
+          </div>
+          <hr class="c-div">
+          <p class="c-note">€7K spent, €39K returned — 1,144 purchases in a single month of Meta Ads management.</p>
+        </div>
+      </div>
+
+      <div class="c-card fade">
+        <div class="c-img-wrap contain" style="background:#0a0a0a;"><img src="bubbe-logo.png" alt="Bubbe" onerror="this.outerHTML='<span style=\'font-family:var(--cond);font-weight:900;font-size:32px;letter-spacing:-1px;color:#555;\'>Bubbe</span>'"></div>
+        <div class="c-body">
+          <div class="c-tags"><span class="tag tag-m">Meta Ads</span></div>
+          <div class="c-industry">Children's Fashion</div>
+          <div class="c-name">Bubbe</div>
+          <div class="c-metrics">
+            <div><span class="c-m-n">12.73×</span><div class="c-m-l">ROAS</div></div>
+            <div><span class="c-m-n">€18.5K</span><div class="c-m-l">Revenue</div></div>
+            <div><span class="c-m-n">€1,459</span><div class="c-m-l">Ad Spend</div></div>
+            <div><span class="c-m-n">3 mo.</span><div class="c-m-l">Timeframe</div></div>
+          </div>
+          <hr class="c-div">
+          <p class="c-note">Cold account, zero prior campaigns. Built from scratch — 12× return in the first quarter.</p>
+        </div>
+      </div>
+
+      <div class="c-card fade">
+        <div class="c-img-wrap contain" style="background:#f4f5f7;"><img src="fullgas-logo.png" alt="Fullgas.shop" onerror="this.src='../dolphin-wave-site/public/clients/fullgas.png'"></div>
+        <div class="c-body">
+          <div class="c-tags"><span class="tag tag-g">Google Ads</span></div>
+          <div class="c-industry">Auto Parts</div>
+          <div class="c-name">Fullgas.shop</div>
+          <div class="c-metrics">
+            <div><span class="c-m-n">707%</span><div class="c-m-l">ROAS</div></div>
+            <div><span class="c-m-n">€21.3K</span><div class="c-m-l">Revenue</div></div>
+            <div><span class="c-m-n">377</span><div class="c-m-l">Conversions</div></div>
+            <div><span class="c-m-n">€3K</span><div class="c-m-l">Ad Spend</div></div>
+          </div>
+          <hr class="c-div">
+          <p class="c-note">Google Shopping + Search. 377 tracked conversions across a 4-month window.</p>
+        </div>
+      </div>
+
+      <div class="c-card fade">
+        <div class="c-img-wrap contain" style="background:#f5ede0;"><img src="proste-jinak-logo.png" alt="Prostě Jinak" onerror="this.parentElement.innerHTML='<span style=\'font-family:var(--cond);font-weight:900;font-size:26px;color:var(--border-d);letter-spacing:-1px;\'>Prostě Jinak</span>'"></div>
+        <div class="c-body">
+          <div class="c-tags"><span class="tag tag-g">Google Ads</span></div>
+          <div class="c-industry">Czech Market</div>
+          <div class="c-name">Proste Jinak</div>
+          <div class="c-metrics">
+            <div><span class="c-m-n">550%</span><div class="c-m-l">ROI</div></div>
+            <div><span class="c-m-n">360K</span><div class="c-m-l">CZK Revenue</div></div>
+            <div><span class="c-m-n">65K</span><div class="c-m-l">CZK Spend</div></div>
+            <div><span class="c-m-n">5.5×</span><div class="c-m-l">Return</div></div>
+          </div>
+          <hr class="c-div">
+          <p class="c-note">65K CZK invested via Google Ads — 360K CZK returned.</p>
+        </div>
+      </div>
+
+      <div class="c-card fade">
+        <div class="c-img-wrap contain" style="background:#f0f6ff;"><img src="elegantni-myti-logo.png" alt="Elegantní Mytí" onerror="this.src='../dolphin-wave-site/public/clients/elegantni-myti.png'"></div>
+        <div class="c-body">
+          <div class="c-tags"><span class="tag tag-g">Google Ads</span></div>
+          <div class="c-industry">Car Detailing · Services</div>
+          <div class="c-name">Elegantní Mytí</div>
+          <div class="c-metrics">
+            <div><span class="c-m-n">€40K</span><div class="c-m-l">Monthly Revenue</div></div>
+            <div><span class="c-m-n">8 mo.</span><div class="c-m-l">To scale</div></div>
+            <div><span class="c-m-n">€0</span><div class="c-m-l">Starting revenue</div></div>
+            <div><span class="c-m-n">Full</span><div class="c-m-l">Brand build</div></div>
+          </div>
+          <hr class="c-div">
+          <p class="c-note">New business zero → €40K/month in 8 months via Google Ads and brand strategy.</p>
+        </div>
+      </div>
+
+      <div class="c-card fade">
+        <div class="c-img-wrap contain" style="background:#fafaf8;"><img src="ambrozia-logo.png" alt="Ambrozia" onerror="this.parentElement.innerHTML='<span style=\'font-family:var(--cond);font-weight:900;font-size:26px;letter-spacing:-1px;color:var(--border-d);\'>Ambrozia</span>'"></div>
+        <div class="c-body">
+          <div class="c-tags"><span class="tag tag-m">Meta Ads</span><span class="tag tag-g">Google Ads</span></div>
+          <div class="c-industry">Arts Agency · Events</div>
+          <div class="c-name">Ambrozia</div>
+          <div class="c-metrics">
+            <div><span class="c-m-n">€130</span><div class="c-m-l">Per day ticket</div></div>
+            <div><span class="c-m-n">Meta</span><div class="c-m-l">Channel</div></div>
+            <div><span class="c-m-n">✓</span><div class="c-m-l">Tracking set up</div></div>
+            <div><span class="c-m-n">Live</span><div class="c-m-l">Collaboration active</div></div>
+          </div>
+          <hr class="c-div">
+          <p class="c-note">New collaboration. Troubleshooting complete, tracking fully configured — campaigns launching soon.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="sec" id="services">
+  <div class="sec-inner">
+    <div class="eyebrow">What We Do</div>
+    <h2>Complete Marketing<br>Management</h2>
+    <div class="srv-layout">
+      <div class="srv-left">
+        <p>We don't just run ads. We build the whole marketing engine — strategy, creative, execution, and reporting. One team, full accountability.</p>
+        <p>Whether you need a single channel or a full marketing department, we scale to what your business needs.</p>
+        <a href="#cta" class="btn-black" style="display:inline-block;margin-top:20px;">Let's Talk →</a>
+        <div class="srv-img">
+          <img src="creatives-collage.png" alt="Ad creatives and graphics we produce">
+        </div>
+      </div>
+      <div class="srv-grid">
+        <div class="srv-item fade"><div class="srv-ico">📣</div><h4>Meta Ads</h4><p>Full campaign management — setup, creative, A/B testing, scaling, weekly optimization.</p></div>
+        <div class="srv-item fade"><div class="srv-ico">🔍</div><h4>Google Ads</h4><p>Search, Shopping, and Performance Max. Every euro tracked to conversion.</p></div>
+        <div class="srv-item fade"><div class="srv-ico">🎨</div><h4>Creative & Graphics</h4><p>Ad creatives, social visuals, brand assets — designed to convert, not just look good.</p></div>
+        <div class="srv-item fade"><div class="srv-ico">🎬</div><h4>Video Editing</h4><p>Reels, ads, UGC cuts, product videos. Fast turnaround, built for the feed.</p></div>
+        <div class="srv-item fade"><div class="srv-ico">📊</div><h4>Strategy & Planning</h4><p>Audience research, funnel design, budget allocation — before you spend a cent.</p></div>
+        <div class="srv-item fade"><div class="srv-ico">📱</div><h4>Social Media Management</h4><p>Organic content, community management, and brand voice across all platforms.</p></div>
+        <div class="srv-item fade"><div class="srv-ico">🎯</div><h4>Lead Generation</h4><p>End-to-end lead gen — landing pages, lead magnets, follow-up, CRM integration.</p></div>
+        <div class="srv-item fade"><div class="srv-ico">🏢</div><h4>Full Marketing Management</h4><p>Your entire marketing department, outsourced. Strategy + execution + reporting.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REPORTING -->
+<section class="sec sec-alt">
+  <div class="sec-inner">
+    <div class="eyebrow">Transparency</div>
+    <h2>You Always Know<br>What's Happening</h2>
+    <div class="rep-layout">
+      <div class="rep-left">
+        <div class="rep-photo fade">
+          <img src="reporting-photo.png" alt="Weekly Loom report — Damian reviewing campaign results" onerror="this.src='loom-screen.png'">
+        </div>
+        <div class="rep-sender fade">
+          <div class="rep-sender-photo">
+            <img src="../skymaps-cultiwise-proposal/Damián.jpg" alt="Damian">
+          </div>
+          <div class="rep-sender-info">
+            <strong>Damian Drahovsky</strong>
+            <span>Sends your report every week, personally.</span>
+          </div>
+        </div>
+      </div>
+      <div class="rep-cards">
+        <div class="rep-card fade">
+          <span class="rep-loom-tag">Loom · Video Reports</span>
+          <h3>Weekly Loom Reports</h3>
+          <p><strong>Loom</strong> is a screen-recording tool that lets us send you a short video walkthrough — no call needed. Every Friday you get a recorded summary of your campaigns: what performed, what changed, and what's coming next.</p>
+          <ul class="rep-list">
+            <li><span class="rep-dot"></span>Video walkthrough every 7 days</li>
+            <li><span class="rep-dot"></span>Performance vs. last week comparison</li>
+            <li><span class="rep-dot"></span>Changes made and why</li>
+            <li><span class="rep-dot"></span>Next week's plan</li>
+          </ul>
+        </div>
+        <div class="rep-card fade">
+          <h3>Live KPI Dashboard</h3>
+          <p>Real-time access to your numbers. Spend, revenue, ROAS, CPL, conversions — always up to date, no waiting.</p>
+          <ul class="rep-list">
+            <li><span class="rep-dot"></span>Live ad spend tracking</li>
+            <li><span class="rep-dot"></span>Revenue & ROAS in real time</li>
+            <li><span class="rep-dot"></span>Cost per lead / cost per acquisition</li>
+            <li><span class="rep-dot"></span>Monthly performance summaries</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="sec" id="about">
+  <div class="sec-inner">
+    <div class="about-layout">
+      <div class="about-left fade">
+        <div class="eyebrow">Who's Behind This</div>
+        <h2>Built by Someone<br>Who's Actually Done It</h2>
+        <p>I started BrandoMise with one principle: results over reports. Too many agencies look good in decks and disappear in execution. We do the opposite.</p>
+        <p>Over 12 years I've worked with 20+ brands across fashion, e-commerce, services, and luxury — from businesses starting at zero to brands turning over €5M/year.</p>
+        <p>Every client gets direct access to me. No account managers, no handoffs. The person who signs the contract runs your campaigns.</p>
+        <div class="badges">
+          <span class="badge">12+ Years Experience</span>
+          <span class="badge">20+ Brands Scaled</span>
+          <span class="badge">Meta Ads Specialist</span>
+          <span class="badge">Google Ads Certified</span>
+          <span class="badge">E-commerce Focus</span>
+          <span class="badge">Direct Communication</span>
+        </div>
+      </div>
+      <div class="about-stats fade">
+        <div class="a-stat"><span class="a-n">€1.4M+</span><span class="a-l">Total revenue generated for clients</span></div>
+        <div class="a-stat"><span class="a-n">20+</span><span class="a-l">Brands scaled across all categories</span></div>
+        <div class="a-stat"><span class="a-n">12 yrs</span><span class="a-l">Active in digital marketing</span></div>
+        <div class="a-stat"><span class="a-n">707%</span><span class="a-l">Best ROAS delivered (Google Ads)</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="sec sec-dark" id="cta">
+  <div class="sec-inner">
+    <div class="cta-inner">
+      <div class="eyebrow eyebrow-w">Get Started</div>
+      <h2 class="light">Ready to Grow<br>Your Brand?</h2>
+      <p>Book a free 15-minute discovery call. We'll look at your current setup, find the biggest opportunity, and tell you exactly how we'd approach it.</p>
+      <div class="cta-btns">
+        <a href="mailto:info@dolphinwave-media.com" class="btn-wl">Book a Free Call</a>
+        <a href="https://www.instagram.com/brandomise/" target="_blank" class="btn-ol">@brandomise on Instagram</a>
+      </div>
+      <p class="cta-fine">No commitment. No pitch deck. Just a straight conversation about your numbers.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-logo">
+    <span>Brandomise · 2026</span>
+  </div>
+  <span>info@dolphinwave-media.com</span>
+</footer>
+
+<script>
+  document.querySelectorAll('.counting').forEach(el => {
+    const obs = new IntersectionObserver(entries => {
+      if (!entries[0].isIntersecting) return;
+      const target = parseInt(el.dataset.target);
+      const suffix = el.dataset.suffix || '+';
+      let cur = 0, step = Math.ceil(target / 45);
+      const t = setInterval(() => { cur = Math.min(cur + step, target); el.textContent = cur + suffix; if (cur >= target) clearInterval(t); }, 38);
+      obs.unobserve(el);
+    }, { threshold: 0.5 });
+    obs.observe(el);
+  });
+
+  const fo = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); fo.unobserve(e.target); } });
+  }, { threshold: 0.07, rootMargin: '0px 0px -32px 0px' });
+  document.querySelectorAll('.fade').forEach(el => fo.observe(el));
+</script>
+</body>
+</html>
