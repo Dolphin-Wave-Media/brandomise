@@ -88,8 +88,8 @@
     .proof-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:44px; }
     .proof-card { border-radius:var(--radius); overflow:hidden; border:1px solid var(--border); background:var(--white); display:flex; flex-direction:column; }
     .proof-card.tall { grid-row:span 2; }
-    .proof-img { overflow:hidden; flex:1; min-height:200px; }
-    .proof-img img { width:100%; height:100%; object-fit:cover; object-position:top; display:block; }
+    .proof-img { overflow:hidden; flex:1; min-height:200px; background:#f0f0ed; }
+    .proof-img img { width:100%; height:100%; object-fit:cover; object-position:top; display:block; min-height:200px; }
     .proof-cap { padding:14px 18px; border-top:1px solid var(--border); }
     .proof-tag { font-size:10px; font-weight:700; letter-spacing:1.4px; text-transform:uppercase; color:var(--muted); display:block; margin-bottom:3px; }
     .proof-cap p { font-size:12px; color:var(--muted); line-height:1.5; }
@@ -113,9 +113,9 @@
     .cases-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
     .c-card { background:var(--white); border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; display:flex; flex-direction:column; transition:box-shadow .2s, border-color .2s; }
     .c-card:hover { border-color:var(--border-d); box-shadow:0 4px 24px rgba(0,0,0,.07); }
-    .c-img-wrap { height:160px; overflow:hidden; background:#f0f0ed; display:flex; align-items:center; justify-content:center; }
-    .c-img-wrap img { width:100%; height:100%; object-fit:cover; object-position:top; }
-    .c-img-wrap.contain img { object-fit:contain; padding:20px 32px; }
+    .c-img-wrap { height:180px; overflow:hidden; background:#f0f0ed; display:flex; align-items:center; justify-content:center; }
+    .c-img-wrap img { width:100%; height:100%; object-fit:cover; object-position:top; display:block; }
+    .c-img-wrap.contain img { object-fit:contain; padding:20px 32px; height:100%; width:100%; }
     .c-img-wrap.dark-bg { background:#0c1a2e; }
     .c-body { padding:22px 22px 26px; flex:1; }
     .c-tags { display:flex; gap:6px; margin-bottom:12px; flex-wrap:wrap; }
@@ -195,15 +195,94 @@
     .fade { opacity:0; transform:translateY(16px); transition:opacity .5s ease, transform .5s ease; }
     .fade.in { opacity:1; transform:translateY(0); }
 
-    /* RESPONSIVE */
+    /* RESPONSIVE — TABLET */
     @media (max-width:960px) {
       nav { padding:0 20px; }
-      .sec { padding:64px 20px; }
-      .hero { padding:72px 20px 64px; }
-      .hero-inner,.why-grid,.process-row,.cases-grid,.srv-layout,.rep-layout,.about-layout { grid-template-columns:1fr; }
-      .hero-stats,.about-stats { grid-template-columns:1fr 1fr; }
+      nav .nav-r { gap:14px; }
+      nav .nav-link { display:none; }
+      .hero { padding:72px 24px 60px; }
+      .hero::after { font-size:300px; right:-20px; }
+      .hero-inner { grid-template-columns:1fr; gap:40px; }
+      .hero-sub { max-width:100%; }
+      .sec { padding:64px 24px; }
+      .why-grid { grid-template-columns:1fr 1fr; }
+      .why-card { border-bottom:1px solid var(--border); }
+      .process-row { grid-template-columns:1fr; }
       .proof-grid { grid-template-columns:1fr; }
-      footer { flex-direction:column; gap:10px; text-align:center; }
+      .proof-card.tall { grid-row:span 1; }
+      .proof-right { gap:16px; }
+      .cases-grid { grid-template-columns:1fr 1fr; }
+      .srv-layout { grid-template-columns:1fr; gap:36px; }
+      .srv-grid { grid-template-columns:1fr 1fr; }
+      .rep-layout { grid-template-columns:1fr; }
+      .about-layout { grid-template-columns:1fr; }
+      .about-stats { grid-template-columns:1fr 1fr; }
+      .hero-stats { grid-template-columns:1fr 1fr; }
+      footer { flex-direction:column; gap:10px; text-align:center; padding:24px 20px; }
+    }
+
+    /* RESPONSIVE — MOBILE */
+    @media (max-width:600px) {
+      nav { padding:0 16px; height:52px; }
+      .btn-black { padding:7px 14px; font-size:12px; }
+
+      .hero { padding:60px 16px 48px; }
+      .hero::after { display:none; }
+      .hero h1 { font-size:52px; letter-spacing:-1.5px; }
+      .hero-sub { font-size:15px; }
+      .hero-btns { flex-direction:column; }
+      .btn-w, .btn-gw { text-align:center; padding:13px 20px; }
+      .hero-stats { grid-template-columns:1fr 1fr; }
+      .hs { padding:18px 14px; }
+      .hs-n { font-size:30px; }
+      .hs-l { font-size:10px; }
+
+      .logos-wrap { padding:24px 0; }
+      .logo-cell { padding:0 22px; }
+      .logo-cell img { height:24px; }
+
+      .sec { padding:52px 16px; }
+      h2 { font-size:36px; }
+
+      .why-grid { grid-template-columns:1fr; }
+      .why-n { font-size:48px; }
+
+      .process-row { grid-template-columns:1fr; }
+      .step-n { font-size:60px; }
+
+      .proof-grid { grid-template-columns:1fr; gap:12px; }
+      .proof-img { min-height:200px !important; }
+      .proof-img img { width:100%; height:100%; object-fit:cover; object-position:top; display:block; }
+
+      .cases-grid { grid-template-columns:1fr; gap:12px; }
+      .c-img-wrap { height:180px; }
+      .c-img-wrap img { width:100%; height:100%; }
+      .c-img-wrap.contain img { object-fit:contain; padding:16px 24px; }
+      .c-body { padding:18px 18px 22px; }
+      .c-metrics { gap:10px; }
+      .c-m-n { font-size:24px; }
+
+      .srv-layout { grid-template-columns:1fr; }
+      .srv-grid { grid-template-columns:1fr; }
+      .srv-img img { width:100%; height:auto; }
+
+      .rep-layout { grid-template-columns:1fr; gap:20px; }
+      .rep-left { gap:12px; }
+      .rep-photo img { width:100%; height:auto; display:block; }
+      .rep-sender { padding:12px 16px; }
+      .rep-sender-photo { width:44px; height:44px; }
+      .rep-card { padding:22px 18px; }
+
+      .about-layout { grid-template-columns:1fr; }
+      .about-stats { grid-template-columns:1fr 1fr; }
+      .a-n { font-size:34px; }
+
+      .cta-section { padding:72px 16px; }
+      .cta-inner h2 { font-size:42px; }
+      .cta-btns { flex-direction:column; }
+      .btn-wl, .btn-ol { text-align:center; padding:14px 24px; }
+
+      footer { padding:20px 16px; }
     }
   </style>
 </head>
