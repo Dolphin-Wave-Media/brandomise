@@ -252,6 +252,39 @@
     /* WHY WIDE */
     .why-card-wide { grid-column:1/-1; }
 
+    /* ABOUT BRAND INTRO */
+    .ab-layout { display:grid; grid-template-columns:1fr 1fr; gap:72px; align-items:center; }
+    .ab-text p { font-size:16px; color:rgba(255,255,255,.58); line-height:1.85; margin-bottom:14px; }
+    .brand-way { display:flex; align-items:flex-start; gap:18px; margin-top:28px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1); border-radius:var(--radius); padding:22px 22px; }
+    .brand-way-ico { font-size:26px; flex-shrink:0; }
+    .brand-way strong { font-size:15px; font-weight:700; color:#fff; display:block; margin-bottom:4px; }
+    .brand-way p { font-size:13px; color:rgba(255,255,255,.5); line-height:1.6; margin:0; }
+    .ab-stats { display:grid; grid-template-columns:1fr 1fr; gap:1px; background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.08); border-radius:var(--radius); overflow:hidden; position:relative; }
+    .ab-stat { background:rgba(255,255,255,.04); padding:28px 24px; }
+    .ab-stat-n { font-family:var(--cond); font-weight:900; font-size:44px; line-height:1; letter-spacing:-1.5px; color:#fff; display:block; margin-bottom:5px; }
+    .ab-stat-l { font-size:12px; color:rgba(255,255,255,.38); }
+
+    /* MOUNTAIN RIDGE PROJECT */
+    .mr-layout { display:grid; grid-template-columns:1fr 1fr; gap:48px; margin-top:48px; align-items:start; }
+    .mr-badge { display:inline-flex; align-items:center; gap:8px; background:#f0fff4; color:#166534; font-size:10px; font-weight:700; letter-spacing:1.4px; text-transform:uppercase; padding:5px 12px; border-radius:5px; margin-bottom:18px; }
+    .mr-desc { font-size:15px; color:var(--muted); line-height:1.8; margin-bottom:24px; }
+    .mr-section h4 { font-size:12px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--black); margin-bottom:12px; }
+    .mr-list { list-style:none; margin-bottom:24px; }
+    .mr-list li { font-size:13px; color:var(--muted); padding:8px 0; border-bottom:1px solid var(--border); display:flex; gap:10px; }
+    .mr-list li:last-child { border-bottom:none; }
+    .mr-list li::before { content:'→'; color:var(--black); font-size:11px; flex-shrink:0; }
+    .mr-deliverables { display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--border); border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; }
+    .mr-del { background:var(--white); padding:22px 20px; }
+    .mr-del-n { font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted); display:block; margin-bottom:8px; }
+    .mr-del h4 { font-size:14px; font-weight:700; color:var(--black); margin-bottom:5px; }
+    .mr-del p { font-size:12px; color:var(--muted); line-height:1.55; }
+
+    /* NEXT STEPS DETAIL */
+    .ns-detail { list-style:none; margin-top:8px; }
+    .ns-detail li { font-size:12px; color:var(--muted); padding:5px 0; border-bottom:1px solid var(--border); display:flex; gap:8px; line-height:1.45; }
+    .ns-detail li:last-child { border-bottom:none; }
+    .ns-detail li::before { content:'·'; color:var(--black); flex-shrink:0; font-weight:900; }
+
     /* FADE */
     .fade { opacity:0; transform:translateY(16px); transition:opacity .5s ease, transform .5s ease; }
     .fade.in { opacity:1; transform:translateY(0); }
@@ -282,6 +315,10 @@
       .svc-steps.three { grid-template-columns:1fr 1fr; }
       .sp-grid { grid-template-columns:1fr; }
       .ns-row { grid-template-columns:1fr 1fr; }
+      .ab-layout { grid-template-columns:1fr; gap:36px; }
+      .mr-layout { grid-template-columns:1fr; }
+      .mr-deliverables { grid-template-columns:1fr 1fr; }
+      .ab-stats { grid-template-columns:1fr 1fr; }
       .rep-layout { grid-template-columns:1fr; }
       .about-layout { grid-template-columns:1fr; }
       .about-stats { grid-template-columns:1fr 1fr; }
@@ -439,6 +476,33 @@
     </div>
   </div>
 </div>
+
+<!-- ABOUT BRANDOMISE INTRO -->
+<section class="sec sec-dark" id="about-intro">
+  <div class="sec-inner">
+    <div class="ab-layout">
+      <div class="ab-text">
+        <div class="eyebrow eyebrow-w">About</div>
+        <h2 class="light">About<br>Brandomise</h2>
+        <p>At Brandomise, we specialize in crafting tailored digital marketing solutions that drive growth, enhance online visibility, and boost conversions.</p>
+        <p>Our comprehensive service packages ensure that businesses maximize their digital presence through strategic SEO, social media marketing, email marketing, and paid advertising.</p>
+        <div class="brand-way">
+          <div class="brand-way-ico">💡</div>
+          <div>
+            <strong>The Brandomise Way</strong>
+            <p>The creative and strategic way to optimize marketing for success.</p>
+          </div>
+        </div>
+      </div>
+      <div class="ab-stats">
+        <div class="ab-stat"><span class="ab-stat-n">€1.4M+</span><span class="ab-stat-l">Total revenue generated</span></div>
+        <div class="ab-stat"><span class="ab-stat-n">20+</span><span class="ab-stat-l">Brands scaled</span></div>
+        <div class="ab-stat"><span class="ab-stat-n">12 yrs</span><span class="ab-stat-l">Team experience</span></div>
+        <div class="ab-stat"><span class="ab-stat-n">707%</span><span class="ab-stat-l">Best ROAS delivered</span></div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- WHY BRANDOMISE -->
 <section class="sec" id="why">
@@ -692,6 +756,69 @@
         </div>
       </div>
 
+    </div>
+  </div>
+</section>
+
+<!-- MOUNTAIN RIDGE CLIENT SPOTLIGHT -->
+<section class="sec sec-dark" id="projects">
+  <div class="sec-inner">
+    <div class="eyebrow eyebrow-w">Client Project</div>
+    <h2 class="light">Mountain Ridge<br>Landscaping</h2>
+    <div class="mr-layout">
+      <div>
+        <span class="mr-badge">✦ Active Project · Elmwood Park, NJ</span>
+        <p class="mr-desc">Mountain Ridge Landscaping, Maintenance &amp; Design LLC came to us with a 2.0 Google rating, no website, and a Facebook page with under 10 likes. We built their entire digital presence from the ground up.</p>
+
+        <div class="mr-section">
+          <h4>The Problem</h4>
+          <ul class="mr-list">
+            <li>Not visible online — customers couldn't find them through search</li>
+            <li>Google Business Profile with 2.0 stars and only 1 review</li>
+            <li>No website — losing potential leads to competitors daily</li>
+            <li>Facebook page with 9 likes and 61 followers, no posting strategy</li>
+          </ul>
+        </div>
+
+        <div class="mr-section">
+          <h4>What We Did</h4>
+          <ul class="mr-list">
+            <li>Built a brand new professional website (Home, Services, Gallery, Contact)</li>
+            <li>Optimized for local Google searches — landscaping in Elmwood Park</li>
+            <li>Refreshed Google Business Profile: photos, contact info, review strategy</li>
+            <li>Social media refresh across Facebook, Instagram &amp; LinkedIn</li>
+            <li>Weekly content creation and posting to keep the brand top-of-mind</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <div class="mr-deliverables">
+          <div class="mr-del">
+            <span class="mr-del-n">Deliverable 01</span>
+            <h4>New Website</h4>
+            <p>Professional Squarespace site — mobile-friendly, fast, and SEO-optimized for local search.</p>
+          </div>
+          <div class="mr-del">
+            <span class="mr-del-n">Deliverable 02</span>
+            <h4>Local SEO</h4>
+            <p>On-page optimization, Google Business Profile, link building &amp; citation management.</p>
+          </div>
+          <div class="mr-del">
+            <span class="mr-del-n">Deliverable 03</span>
+            <h4>Social Media</h4>
+            <p>Refreshed profiles across Facebook, Instagram &amp; LinkedIn with consistent posting.</p>
+          </div>
+          <div class="mr-del">
+            <span class="mr-del-n">Deliverable 04</span>
+            <h4>Content Strategy</h4>
+            <p>Weekly posts using employee-generated content and high-quality visuals of their work.</p>
+          </div>
+        </div>
+        <div style="margin-top:16px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:var(--radius);padding:24px 26px;">
+          <p style="font-size:13px;color:rgba(255,255,255,.5);line-height:1.7;margin:0;">"We'll build your website, optimize it for Google, and create a marketing strategy to bring in leads consistently. More inquiries, more conversions, and a strong local reputation."</p>
+          <p style="font-size:11px;color:rgba(255,255,255,.28);margin-top:10px;letter-spacing:.5px;">— Brandomise strategy brief for Mountain Ridge</p>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -990,23 +1117,44 @@
     <div class="ns-row">
       <div class="ns-step fade">
         <span class="ns-n">01</span>
-        <h3>Book Your Free Discovery Call</h3>
-        <p>15 minutes, no commitment. We learn about your business, current setup, and goals — before we say a word about strategy.</p>
+        <h3>Buy a Website Domain (URL)</h3>
+        <p>The prerequisite before any web development. We guide you through domain purchase (GoDaddy or any registrar you prefer) and handle the technical setup.</p>
+        <ul class="ns-detail">
+          <li>Domain registration — no limitation on where to buy</li>
+          <li>DNS setup and hosting configuration</li>
+          <li>Prerequisite for all web presence work</li>
+        </ul>
       </div>
       <div class="ns-step fade">
         <span class="ns-n">02</span>
-        <h3>Full Audit &amp; Custom Strategy</h3>
-        <p>We audit your website, social presence, Google Business Profile, and competitors. Then we design a tailored marketing plan before you spend a cent.</p>
+        <h3>Build &amp; Launch the Website</h3>
+        <p>We design a professional, mobile-friendly website on Squarespace — optimized for Google from day one so customers find you first.</p>
+        <ul class="ns-detail">
+          <li>Home Page, Service Page, Photo Gallery, Contact Page</li>
+          <li>SEO-optimized for local search in your area</li>
+          <li>Fast, mobile-first, easy to update</li>
+        </ul>
       </div>
       <div class="ns-step fade">
         <span class="ns-n">03</span>
-        <h3>Launch Across Channels</h3>
-        <p>We set up tracking, build your content pipeline, optimize your Google Business Profile, launch campaigns, and cover every channel you need.</p>
+        <h3>Update Social Media &amp; Google Business Profile</h3>
+        <p>We refresh your entire social presence and fully optimize your Google Business Profile to attract and convert local customers.</p>
+        <ul class="ns-detail">
+          <li>Professional profile photos and cover images</li>
+          <li>Updated contact details, services, and hours</li>
+          <li>Google Business: photos, contact info, review strategy</li>
+          <li>Facebook, Instagram &amp; LinkedIn refreshed</li>
+        </ul>
       </div>
       <div class="ns-step fade">
         <span class="ns-n">04</span>
-        <h3>Optimize, Scale &amp; Report</h3>
-        <p>Weekly Loom reports every Friday, monthly strategy reviews. We cut what doesn't perform and scale what does — every single week.</p>
+        <h3>Capture Content &amp; Start Promoting</h3>
+        <p>We create a steady stream of content using real photos and videos of your work to keep your brand visible and your pipeline full.</p>
+        <ul class="ns-detail">
+          <li>Employee-generated content + stock media</li>
+          <li>Weekly posts to keep your brand top-of-mind</li>
+          <li>Testimonials and work showcases</li>
+        </ul>
       </div>
     </div>
   </div>
